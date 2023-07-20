@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- ======= Testimonials Section ======= -->
+<section id="testimonials" class="testimonials section-bg">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2>BOOK</h2>
+            <p>Book List</p>
+        </div>
+        <div class="container">
+            <div class="row">
+                {% for book in book_page_obj %}
+                <div class="col-md-4">
+                    <figure class="effect-julia item">
+                        <img src="{{ book.image.url }}" alt="Image">
+                        <figcaption>
+                            <div>
+                                <p class="small">{{ book.title }}</p>
+                                <p class="small">{{ book.author }}</p>
+                            </div>
+                            <a href="{% url 'book_detail' book.id %}">View more</a>
+                        </figcaption>
+                    </figure>
+                </div>
+                {% empty %}
+                <div class="col">
+                    <p>No books found.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% if book_page_obj.has_previous %}
+        <a href="?book_page={{ book_page_obj.previous_page_number }}" class="btn btn-primary">Previous</a>
+        {% endif %}
+
+        <span class="current-page"> {{ book_page_obj.number }} </span>
+
+        {% if book_page_obj.has_next %}
+        <a href="?book_page={{ book_page_obj.next_page_number }}" class="btn btn-primary">Next</a>
+        {% endif %}
+
+    </div>
+</section><!-- End Testimonials Section -->
+<!-- ======= About Section ======= -->
+<!-- ======= author Section ======= -->
+<section id="chefs" class="chefs">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2>AUTHOR</h2>
+            <p>Author</p>
+        </div>
+
+        <div class="row">
+            {% for author in author_page_obj %}
+            <div class="col-lg-4 col-md-6">
+                <div class="author-avatar">
+                    {% if author.avatar %}
+                    <img src="{{ author.avatar.url }}" alt="Avatar" class="rounded-circle w-25">
+                    {% else %}
+                    <img src="avatars/default.png" alt="Avatar" class="rounded-circle w25">
+                    {% endif %}
+                </div>
+                <p>{{ author.name }}</p>
+                <a href="{% url 'author' author.id %}">View more</a>
+            </div>
+            {% empty %}
+            <div class="col">
+                <p>No authors found.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section><!-- End author Section -->
+{% endblock %}
