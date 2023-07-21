@@ -39,8 +39,10 @@
         <h1 class="logo me-auto me-lg-0"><a href="home.html">OnlineBook</a></h1>
 
         <div class="dropdown text-warning">
-            <img src="{{ user.avatar.url }}" alt="User Avatar" class=" dropdown-toggle rounded-circle img-fluid w-25"
-                 id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown"
+               aria-expanded="false">
+                {{ user.username }}
+            </a>
             <ul class="dropdown-menu shadow-none bg-dark" aria-labelledby="dropdownMenuButton1">
                 <li><a class="dropdown-item" href="{% url 'home' %}">Home</a></li>
                 <li><a class="dropdown-item" href="#contact">Contact</a></li>
