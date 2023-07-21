@@ -20,7 +20,7 @@ class Author(models.Model):
 class Book(models.Model):
     title = models.CharField(max_length=100)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
-    publication_date = models.DateField()
+    publication_date = models.DateField(auto_now_add=True)
     description = models.TextField()
     image = models.ImageField(upload_to='books/', default='books/default.jpeg')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)

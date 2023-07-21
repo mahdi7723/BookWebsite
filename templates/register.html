@@ -1,4 +1,5 @@
 {% load static %}
+{% load crispy_forms_tags %}
 <html>
 <head>
     <meta charset="utf-8">
@@ -16,48 +17,13 @@
 <body>
 <div class="wrapper" style="background-image: url('images/bg-registration-form-2.jpg');">
     <div class="inner">
-        {% if messages %}
-        <div class="messages">
-            {% for message in messages %}
-            {% if message.tags == 'success' %}
-            <div class="alert alert-success">{{ message }}</div>
-            {% elif message.tags == 'error' %}
-            <div class="alert alert-danger">{{ message }}</div>
-            {% endif %}
-            {% endfor %}
-        </div>
-        {% endif %}
-        <form method="post" action="{% url 'users:register' %}">
+        <form method="post" action="">
             {% csrf_token %}
-            <h3>Registration Form</h3>
-            <div class="form-group">
-                <div class="form-wrapper">
-                    <label for="first_name">First Name</label>
-                    <input type="text" id="first_name" name="first_name" class="form-control" required>
-                </div>
-                <div class="form-wrapper">
-                    <label for="last_name">Last Name</label>
-                    <input type="text" id="last_name" name="last_name" class="form-control" required>
-                </div>
-            </div>
-            <div class="form-wrapper">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" class="form-control" required>
-            </div>
-            <div class="form-wrapper">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" class="form-control" required>
-            </div>
-            <div class="form-wrapper">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" class="form-control" required>
-            </div>
-            <div class="form-wrapper">
-                <label for="confirm_password">Confirm Password</label>
-                <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
-            </div>
+             <h3>Registration Form</h3>
+            {{ form|crispy}}
+
             <button type="submit">Register</button>
-            <p class="ml-4">Already have an account? <a href="{% url 'users:login' %}">Login here</a>.</p>
+            <p class="ml-4">Already have an account? <a href="{% url 'login' %}">Login here</a>.</p>
         </form>
     </div>
 </div>
