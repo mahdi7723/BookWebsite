@@ -24,8 +24,7 @@ class Book(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to='books/', default='books/default.jpeg')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-
-    # Add any additional fields as per your requirements
+    price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
         return self.title

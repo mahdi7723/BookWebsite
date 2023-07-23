@@ -14,8 +14,8 @@ class SignUpView(generic.CreateView):
 
 
 @login_required(login_url='login')
-def Profile(request, user_id):
-    user = get_object_or_404(CustomUser, pk=user_id)
+def Profile(request):
+    user = request.user
 
     return render(request, 'profile.html', {'user': user})
 

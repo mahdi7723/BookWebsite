@@ -36,16 +36,20 @@
 <header id="header" class="fixed-top d-flex align-items-center">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
         <h1 class="logo me-auto me-lg-0"><a href="{% url 'home' %}">OnlineBook</a></h1>
-            <a class=" me-2 btn btn-primary" href="{% url 'login' %}">Login</a>
-            <a class=" me-3 btn btn-success" href="{% url 'register' %}">Register</a>
+        <a class=" me-2 btn btn-primary" href="{% url 'login' %}">Login</a>
+        <a class=" me-3 btn btn-success" href="{% url 'register' %}">Register</a>
         <a class="dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown"
            aria-expanded="false">
-            {{ user.username }}
+            {% if user.is_authenticated %}
+            <p>{{ user.username }}</p>
+            {% else %}
+            <p>guest</p>
+            {% endif %}
         </a>
         <div class="dropdown text-warning">
             <ul class="dropdown-menu shadow-none bg-dark" aria-labelledby="dropdownMenuButton1">
                 <li><a class="dropdown-item" href="{% url 'home' %}">Home</a></li>
-                <li><a class="dropdown-item" href="{% url 'profile' user.id %}">Profile</a></li>
+                <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
                 <li><a class="dropdown-item" href="#contact">Contact</a></li>
                 <li><a class="dropdown-item btn btn-danger" href="{% url 'logout' %}">Log Out</a></li>
             </ul>
