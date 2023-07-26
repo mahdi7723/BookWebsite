@@ -1,9 +1,14 @@
 from django.db import models
+from accounts.models import CustomUser
 
 
 # Create your models here.
 class Category(models.Model):
     name = models.CharField(max_length=100)
+
+    @staticmethod
+    def get_all_categories():
+        return Category.objects.all()
 
     def __str__(self):
         return self.name
@@ -28,3 +33,12 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class CartItem(models.Model):
+    product = models.ForeignKey(Book, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)  # If using authentication
+
+    def __str__(self):
+        return f"{self.quantity} x {self.product.name}"

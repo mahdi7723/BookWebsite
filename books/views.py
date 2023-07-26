@@ -1,6 +1,7 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.core.paginator import Paginator
-from .models import Book, Category, Author
+from .models import Book, Category, Author, CartItem
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
@@ -28,7 +29,6 @@ def book_detail(request, book_id):
         'author': author,
         'author_books': author_books,
     }
-
     return render(request, 'book_detail.html', context)
 
 
@@ -47,3 +47,58 @@ def author_book(request, author_id):
     }
 
     return render(request, 'author_book.html', context)
+
+
+@login_required
+def add_to_cart(request, book_id):
+    product = Book.objects.get(pk=book_id)
+    user = request.user
+
+    # Check if the item already exists in the cart, if yes, update the quantity, else create a new entry.
+    try:
+        cart_item = CartItem.objects.get(product=product, user=user)
+        cart_item.quantity += 1
+        cart_item.save()
+    except CartItem.DoesNotExist:
+        cart_item = CartItem(product=product, user=user)
+        cart_item.save()
+
+    return redirect('cart')
+
+
+@login_required
+def remove_from_cart(request, cart_item_id):
+    cart_item = CartItem.objects.get(pk=cart_item_id)
+    cart_item.delete()
+    return redirect('cart')
+
+
+@login_required
+def cart_view(request):
+    user = request.user
+    cart_items = CartItem.objects.filter(user=user)
+    total_price = sum(item.product.price * item.quantity for item in cart_items)
+
+    context = {
+        'cart_items': cart_items,
+        'total_price': total_price,
+    }
+
+    return render(request, 'cart.html', context)
+
+
+@login_required
+def increase_quantity(request, cart_item_id):
+    cart_item = CartItem.objects.get(pk=cart_item_id)
+    cart_item.quantity += 1
+    cart_item.save()
+    return redirect('cart')
+
+
+@login_required
+def decrease_quantity(request, cart_item_id):
+    cart_item = CartItem.objects.get(pk=cart_item_id)
+    if cart_item.quantity > 1:
+        cart_item.quantity -= 1
+        cart_item.save()
+    return redirect('cart')

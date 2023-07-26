@@ -18,6 +18,8 @@
                             <div>
                                 <p class="small">{{ book.title }}</p>
                                 <p class="small">{{ book.author }}</p>
+                                <p>Price: ${{ book.price }}</p>
+                                <a href="{% url 'add_to_cart' book.id %}">Add to Cart</a>
                             </div>
                             <a href="{% url 'book_detail' book.id %}">View more</a>
                         </figcaption>

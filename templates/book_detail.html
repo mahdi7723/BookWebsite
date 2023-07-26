@@ -76,6 +76,7 @@
         <div class="row">
             <div class="col-md-6">
                 <img src="{{ book.image.url }}" alt="Book Image" class="img-fluid book-image">
+                <a href="{% url 'add_to_cart' book.id %}">Add to Cart</a>
             </div>
             <div class="col-md-6">
                 <h1 class="book-title">{{ book.title }}</h1>
@@ -87,7 +88,9 @@
                 {% endfor %}
                 <p class="book-genre"><strong>Category:</strong> {{ book.category }}</p>
                 <p class="book-description"><strong>Description:</strong> {{ book.description }}</p>
+                <p>Price: ${{ book.price }}</p>
                 <p>{% ratings book %}</p>
+
             </div>
         </div>
     </div>
